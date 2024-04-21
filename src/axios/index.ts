@@ -1,7 +1,8 @@
 import axios from "axios";
-import { useLogin } from "../store/loadingStore";
+import { useLoading } from "../store/loadingStore";
 import pinia from "../store/store";
-const loadingStore = useLogin(pinia);
+const loadingStore = useLoading(pinia);
+import { message } from "ant-design-vue";
 
 export const axiosService = axios.create({
     baseURL: '/api', // 设置基础URL
@@ -9,26 +10,25 @@ export const axiosService = axios.create({
 })
 // request.js
 axiosService.interceptors.request.use(
-    (config) => {
+    function (config) {
         // 此处添加Loading
         loadingStore.changeLoginStore(true);
-        console.log(loadingStore.isLoading);
         return config;
     },
-    (error) => {
+    function (error) {
         loadingStore.changeLoginStore(false);
-        return error;
+        return Promise.reject(error);
     }
 );
 axiosService.interceptors.response.use(
-    function (res:any) {
-        if (res.status == 500) {
-            console.log("服务器出现错误");
-            loadingStore.changeLoginStore(false);
-            return JSON.parse(res)
-        }else{
-            loadingStore.changeLoginStore(false);
-            return res.data; //这里必须返回 response，否则报错
-        }
+    function (res: any) {
+        // console.log(res);
+        loadingStore.changeLoginStore(false);
+        return res.data; //这里必须返回 response，否则报错
+    }, function (error) {
+        let txt = `端口状态：${error.response.status}\n错误信息:${error.message}`;
+        loadingStore.changeLoginStore(false);
+        message.error(txt);
+        console.log(error);
     }
 )

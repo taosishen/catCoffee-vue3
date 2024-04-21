@@ -1,14 +1,15 @@
 <template>
   <div class="content">
-    <a-spin tip="加载中..." :spinning="loginStore.isLoading" size="large"/>
-    <RouterView>
-    </RouterView>
+    <a-spin tip="加载中..." :spinning="loginStore.isLoading" style="padding-top: 50%;" size="large">
+      <RouterView>
+      </RouterView>
+    </a-spin>
   </div>
 </template>
 
 <script setup lang="ts" name="Content">
-import { useLogin } from '../store/loadingStore';
-let loginStore = useLogin();
+import { useLoading } from '../store/loadingStore';
+let loginStore = useLoading();
 </script>
 
 <style lang="scss" scoped>

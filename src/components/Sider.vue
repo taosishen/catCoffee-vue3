@@ -58,14 +58,12 @@ const items = reactive([
     icon: () => h(AccountBookOutlined),
   }
 ]);
-onMounted(()=>{
+onMounted(() => {
   routerMsg.routerPath = route.path
 })
-watch(route,()=>{
+watch(route, () => {
   selectedKeys[0] = route.path;
   routerMsg.routerPath = route.path
-  console.log(selectedKeys[0]);
-  
 })
 function handleClick(e: any) {
   routerMsg.pushRuter(e.key);

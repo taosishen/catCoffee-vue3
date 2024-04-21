@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts" name="Order">
-
+console.log(import.meta.env);
 </script>
 
 <style lang="scss" scoped>

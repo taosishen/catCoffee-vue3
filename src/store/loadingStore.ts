@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const useLogin = defineStore('login', {
+export const useLoading = defineStore('login', {
     state() {
         return {
             isLoading:false
